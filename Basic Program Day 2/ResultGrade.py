@@ -11,6 +11,6 @@ if Mark>=88:
 elif Mark<88 and Mark>=75:
     print("Good, You Scored a B in your Exam. Best of Luck! for future")
 elif Mark<75 and Mark >=65:
-    Print("You got a C in you ecam, You need to work more in future")
+    print("You got a C in you exam, You need to work more in future")
 else:
     print("your score is ",Mark, " Less then the required conditions to Pass, Hence you are FAIL. Please Prepare for Re-Test")
