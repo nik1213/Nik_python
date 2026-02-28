@@ -157,5 +157,3 @@ data = [
 new_sort= sorted(data, key = lambda y: y["age"])
 print(new_sort)
     
-Rever= new_sort.reverse()
-print(Rever)
