@@ -9,4 +9,8 @@ print(B)
 
 #==================================Using LooP===================
 
-A=" Please Reverse this String"
+str=" Please Reverse this String"
+str1=""
+for i  in  str:
+    str1=i+str1
+print(str1)
