@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Mastery – 30 Day Blueprint</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+  :root {
+    --py: #3776AB;
+    --py2: #FFD43B;
+    --green: #34c77b;
+    --blue: #4a9eff;
+    --purple: #9b7dff;
+    --orange: #ff8c42;
+    --red: #ff5a5a;
+    --bg: #0c0c0f;
+    --card: #16161a;
+    --card2: #1e1e24;
+    --border: #2a2a32;
+    --text: #f0f0f2;
+    --muted: #77778a;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2rem 1rem 5rem;
+  }
+
+  /* ── HEADER ── */
+  header {
+    text-align: center;
+    max-width: 860px;
+    margin: 0 auto 3rem;
+    position: relative;
+  }
+
+  .snake-banner {
+    font-size: 2.5rem;
+    letter-spacing: .2rem;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    background: linear-gradient(135deg, var(--py) 0%, #1a5276 100%);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    padding: .35rem 1rem;
+    border-radius: 2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: .9rem;
+  }
+
+  h1 .accent { color: var(--py2); }
+  h1 .accent2 { color: var(--py); }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ── STATS ROW ── */
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    max-width: 860px;
+    margin: 0 auto 3rem;
+  }
+
+  .stat-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    min-width: 130px;
+    flex: 1;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: .3rem;
+  }
+
+  .stat-label {
+    font-size: .75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-weight: 500;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    max-width: 860px;
+    margin: 0 auto 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── ROADMAP WEEKS ── */
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: .75rem;
+    max-width: 860px;
+    margin: 0 auto 3rem;
+  }
+
+  @media(max-width: 700px) { .roadmap { grid-template-columns: 1fr 1fr; } }
+  @media(max-width: 440px) { .roadmap { grid-template-columns: 1fr; } }
+
+  .week-pill {
+    border-radius: 14px;
+    padding: 1.2rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform .2s, border-color .2s;
+    text-decoration: none;
+  }
+
+  .week-pill:hover { transform: translateY(-3px); }
+
+  .w1 { background: linear-gradient(135deg, #0d2137, #1a3a5c); border-color: #1e4a75; }
+  .w2 { background: linear-gradient(135deg, #0d2a14, #1a4a25); border-color: #1e5a2c; }
+  .w3 { background: linear-gradient(135deg, #2a1a0d, #4a2e0d); border-color: #6a4010; }
+  .w4 { background: linear-gradient(135deg, #1e0d2a, #341a47); border-color: #4a2263; }
+
+  .week-icon { font-size: 1.6rem; margin-bottom: .5rem; }
+
+  .week-num {
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .3rem;
+  }
+
+  .week-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: .95rem;
+    margin-bottom: .4rem;
+    line-height: 1.3;
+  }
+
+  .w1 .week-title { color: var(--blue); }
+  .w2 .week-title { color: var(--green); }
+  .w3 .week-title { color: var(--orange); }
+  .w4 .week-title { color: var(--purple); }
+
+  .week-topics {
+    font-size: .78rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-wrap {
+    max-width: 860px;
+    margin: 0 auto 2.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.3rem 1.5rem;
+  }
+
+  .progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .8rem;
+  }
+
+  .progress-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .9rem; }
+  .progress-count { font-size: .85rem; color: var(--muted); }
+
+  .progress-bar-bg {
+    background: var(--card2);
+    border-radius: 1rem;
+    height: 10px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--py), var(--py2));
+    border-radius: 1rem;
+    transition: width .4s ease;
+    width: 0%;
+  }
+
+  .xp-label {
+    text-align: right;
+    font-size: .75rem;
+    color: var(--py2);
+    margin-top: .4rem;
+    font-weight: 600;
+  }
+
+  /* ── WEEK SECTIONS ── */
+  .week-section {
+    max-width: 860px;
+    margin: 0 auto 2rem;
+  }
+
+  .week-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: .8rem 1.2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .wh1 { background: linear-gradient(90deg, #0d2137 0%, transparent 100%); border-left: 4px solid var(--blue); }
+  .wh2 { background: linear-gradient(90deg, #0d2a14 0%, transparent 100%); border-left: 4px solid var(--green); }
+  .wh3 { background: linear-gradient(90deg, #2a1a0d 0%, transparent 100%); border-left: 4px solid var(--orange); }
+  .wh4 { background: linear-gradient(90deg, #1e0d2a 0%, transparent 100%); border-left: 4px solid var(--purple); }
+
+  .wh-icon { font-size: 1.5rem; }
+  .wh-text { flex: 1; }
+  .wh-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; }
+  .wh-sub { font-size: .8rem; color: var(--muted); margin-top: .15rem; }
+
+  .wh-badge {
+    font-size: .7rem;
+    font-weight: 700;
+    padding: .3rem .8rem;
+    border-radius: 2rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+
+  .wh1 .wh-badge { background: #1a3a5c; color: var(--blue); }
+  .wh2 .wh-badge { background: #1a3a28; color: var(--green); }
+  .wh3 .wh-badge { background: #3a2a0d; color: var(--orange); }
+  .wh4 .wh-badge { background: #2a1a3a; color: var(--purple); }
+
+  /* ── DAY CARDS ── */
+  .days { display: flex; flex-direction: column; gap: .6rem; }
+
+  .day-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color .2s;
+  }
+
+  .day-card:hover { border-color: #444; }
+  .day-card.done { border-color: var(--green); }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    padding: .9rem 1.2rem;
+    user-select: none;
+  }
+
+  .day-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    min-width: 3rem;
+    line-height: 1;
+  }
+
+  .d-w1 { color: var(--blue); }
+  .d-w2 { color: var(--green); }
+  .d-w3 { color: var(--orange); }
+  .d-w4 { color: var(--purple); }
+
+  .day-info { flex: 1; }
+  .day-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .92rem; margin-bottom: .1rem; }
+  .day-focus { font-size: .78rem; color: var(--muted); font-weight: 300; }
+
+  .day-tags { display: flex; gap: .35rem; margin-right: .5rem; }
+
+  .tag {
+    font-size: .64rem;
+    font-weight: 700;
+    padding: .18rem .55rem;
+    border-radius: 1rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    white-space: nowrap;
+  }
+
+  .tag.concept { background: #1a3a5c; color: var(--blue); }
+  .tag.code { background: #1a3a28; color: var(--green); }
+  .tag.project { background: #3a2a0d; color: var(--orange); }
+  .tag.drill { background: #2a1a3a; color: var(--purple); }
+
+  .chevron { color: var(--muted); transition: transform .25s; font-size: 1rem; }
+  .day-card.open .chevron { transform: rotate(180deg); }
+
+  .day-body {
+    display: none;
+    padding: 0 1.2rem 1.2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .day-card.open .day-body { display: block; }
+
+  .task-list { margin-top: .9rem; }
+
+  .task {
+    display: flex;
+    align-items: flex-start;
+    gap: .7rem;
+    padding: .55rem .7rem;
+    border-radius: 8px;
+    margin-bottom: .35rem;
+    transition: background .15s;
+    cursor: pointer;
+  }
+
+  .task:hover { background: var(--card2); }
+
+  .task input[type=checkbox] {
+    accent-color: var(--green);
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    cursor: pointer;
+  }
+
+  .task-text { font-size: .88rem; line-height: 1.5; color: #ccc; }
+  .task-text strong { color: var(--text); font-weight: 500; }
+  .task-text em { color: var(--muted); font-style: normal; font-size: .8rem; }
+  .task.checked .task-text { text-decoration: line-through; color: var(--muted); }
+
+  .code-snippet {
+    background: #0d0d10;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .8rem 1rem;
+    margin-top: .9rem;
+    font-family: 'Courier New', monospace;
+    font-size: .8rem;
+    color: #a8d8a8;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+
+  .code-snippet .comment { color: #555; }
+  .code-snippet .kw { color: #569cd6; }
+  .code-snippet .str { color: #ce9178; }
+  .code-snippet .fn { color: var(--py2); }
+
+  .tip-box {
+    background: var(--card2);
+    border-left: 3px solid var(--py2);
+    border-radius: 0 8px 8px 0;
+    padding: .75rem 1rem;
+    margin-top: .9rem;
+    font-size: .84rem;
+    color: #bbb;
+    line-height: 1.55;
+  }
+
+  .tip-box strong { color: var(--py2); }
+
+  .resource-row {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    margin-top: .9rem;
+  }
+
+  .resource {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .4rem .8rem;
+    font-size: .78rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+  }
+
+  /* ── TOOLS GRID ── */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .75rem;
+    max-width: 860px;
+    margin: 0 auto 3rem;
+  }
+
+  @media(max-width: 600px) { .tools-grid { grid-template-columns: 1fr 1fr; } }
+
+  .tool-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.1rem;
+  }
+
+  .tool-icon { font-size: 1.4rem; margin-bottom: .5rem; }
+  .tool-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .9rem; margin-bottom: .3rem; }
+  .tool-desc { font-size: .78rem; color: var(--muted); line-height: 1.5; }
+
+  /* ── PROJECTS TRACK ── */
+  .projects-list {
+    max-width: 860px;
+    margin: 0 auto 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+  }
+
+  .project-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .proj-week {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: .7rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .3rem .7rem;
+    border-radius: 2rem;
+    white-space: nowrap;
+  }
+
+  .pw1 { background: #1a3a5c; color: var(--blue); }
+  .pw2 { background: #1a3a28; color: var(--green); }
+  .pw3 { background: #3a2a0d; color: var(--orange); }
+  .pw4 { background: #2a1a3a; color: var(--purple); }
+
+  .proj-info { flex: 1; }
+  .proj-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .95rem; }
+  .proj-desc { font-size: .8rem; color: var(--muted); margin-top: .2rem; }
+
+  .proj-skills {
+    display: flex;
+    gap: .35rem;
+    flex-wrap: wrap;
+    margin-top: .4rem;
+  }
+
+  .skill-pill {
+    font-size: .65rem;
+    font-weight: 600;
+    padding: .15rem .5rem;
+    border-radius: 1rem;
+    background: var(--card2);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: .8rem;
+    max-width: 860px;
+    margin: 3rem auto 0;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="snake-banner">🐍</div>
+  <div class="badge">30-Day Blueprint</div>
+  <h1>Master <span class="accent">Python</span><br>From <span class="accent2">Zero</span> to Job-Ready</h1>
+  <p class="subtitle">A structured, project-driven plan that takes you from printing "Hello World" to writing automation scripts, APIs, and data tools — in just 30 days.</p>
+</header>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-box">
+    <div class="stat-num" style="color:var(--py2)">30</div>
+    <div class="stat-label">Days</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num" style="color:var(--blue)">4</div>
+    <div class="stat-label">Phases</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num" style="color:var(--green)">4</div>
+    <div class="stat-label">Projects</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num" style="color:var(--orange)">~2hrs</div>
+    <div class="stat-label">Per Day</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num" style="color:var(--purple)">∞</div>
+    <div class="stat-label">Possibilities</div>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div class="section-title">🗺️ 4-Week Roadmap</div>
+<div class="roadmap">
+  <div class="week-pill w1">
+    <div class="week-icon">🧱</div>
+    <div class="week-num">Week 1</div>
+    <div class="week-title">Core Foundations</div>
+    <div class="week-topics">Variables · Data types · Conditionals · Loops · Functions · Lists & Dicts</div>
+  </div>
+  <div class="week-pill w2">
+    <div class="week-icon">⚙️</div>
+    <div class="week-num">Week 2</div>
+    <div class="week-title">Intermediate Python</div>
+    <div class="week-topics">OOP · File I/O · Error handling · Modules · List comprehensions · pip</div>
+  </div>
+  <div class="week-pill w3">
+    <div class="week-icon">🔌</div>
+    <div class="week-num">Week 3</div>
+    <div class="week-title">Python in the Real World</div>
+    <div class="week-topics">APIs · Web scraping · Databases (SQLite) · CSV/JSON · Automation scripts</div>
+  </div>
+  <div class="week-pill w4">
+    <div class="week-icon">🚀</div>
+    <div class="week-num">Week 4</div>
+    <div class="week-title">Capstone & Polish</div>
+    <div class="week-topics">Final project · Testing · Git · Clean code · Interview prep · Portfolio</div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="section-title">✅ Your Progress</div>
+<div class="progress-wrap">
+  <div class="progress-top">
+    <span class="progress-label">Tasks Completed</span>
+    <span class="progress-count" id="prog-count">0 / 0</span>
+  </div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="prog-bar"></div>
+  </div>
+  <div class="xp-label" id="xp-label">0 XP earned 🏆</div>
+</div>
+
+<!-- ===== WEEK 1 ===== -->
+<div class="week-section" id="week1">
+  <div class="section-title">Week 1 – Core Foundations</div>
+  <div class="week-header wh1">
+    <div class="wh-icon">🧱</div>
+    <div class="wh-text">
+      <div class="wh-title">Days 1–7: Build Your Python Brain</div>
+      <div class="wh-sub">Focus: syntax, logic, data structures — the 20% that gives you 80% of power</div>
+    </div>
+    <div class="wh-badge">Beginner</div>
+  </div>
+  <div class="days">
+
+    <div class="day-card" data-day="1">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w1">D01</div>
+        <div class="day-info">
+          <div class="day-title">Setup + Hello World + Variables</div>
+          <div class="day-focus">Install Python, VS Code, run first script, understand variable types</div>
+        </div>
+        <div class="day-tags"><span class="tag concept">Concept</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Install Python 3.x</strong> from python.org + VS Code + Python extension <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Write your first script:</strong> print("Hello, Nikhil!") — run it in terminal <em>~10 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Learn variable types:</strong> int, float, str, bool — create 5 variables of each type <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Type conversion:</strong> int(), str(), float() — practice converting between types <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Practice:</strong> Write a script that takes your name + age and prints a greeting <em>~20 min</em></div></label>
+        </div>
+        <div class="code-snippet"><span class="comment"># Your first real Python script</span><br><span class="fn">name</span> = <span class="str">"Nikhil"</span><br><span class="fn">age</span> = <span class="fn">25</span><br><span class="kw">print</span>(<span class="str">f"Hello {name}, you are {age} years old!"</span>)</div>
+        <div class="tip-box"><strong>💡 Tip:</strong> Use Python's built-in REPL (just type "python" in terminal) to experiment fast. No need to save a file every time.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="2">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w1">D02</div>
+        <div class="day-info">
+          <div class="day-title">Strings & String Methods</div>
+          <div class="day-focus">Master text manipulation — critical for automation & data work</div>
+        </div>
+        <div class="day-tags"><span class="tag concept">Concept</span><span class="tag code">Code</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>String operations:</strong> concatenation, slicing [0:5], len(), upper(), lower(), strip() <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>f-strings mastery:</strong> f"{variable}" — the modern way to format strings in Python 3 <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Key methods:</strong> split(), join(), replace(), find(), startswith(), endswith() <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Mini project:</strong> Write a script that parses a log line and extracts timestamp + message <em>~30 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Relevance to PwC:</strong> String parsing is used constantly in log analysis, monitoring scripts, and runbook automation — directly applicable!</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="3">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w1">D03</div>
+        <div class="day-info">
+          <div class="day-title">Conditionals & Logic</div>
+          <div class="day-focus">if/elif/else, comparison operators, logical operators</div>
+        </div>
+        <div class="day-tags"><span class="tag concept">Concept</span><span class="tag code">Code</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>if/elif/else:</strong> Write 5 different decision-making scripts (grade checker, number sign, etc.) <em>~40 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Logical operators:</strong> and, or, not — combine conditions <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Comparison operators:</strong> ==, !=, >, <, >=, <= — understand all 6 <em>~15 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Build:</strong> A health-check script that prints "OK" / "WARNING" / "CRITICAL" based on a CPU % value <em>~30 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> Think of if/else as the "decision tree" in every automation script — mastering this makes everything else easier.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="4">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w1">D04</div>
+        <div class="day-info">
+          <div class="day-title">Loops — for & while</div>
+          <div class="day-focus">Iteration is the heartbeat of automation</div>
+        </div>
+        <div class="day-tags"><span class="tag concept">Concept</span><span class="tag code">Code</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>for loops:</strong> iterate over lists, strings, range() — write 5 examples <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>while loops:</strong> understand when to use while vs for, break, continue <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Nested loops:</strong> simple 2D iteration (multiplication table) <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Build:</strong> A retry loop — attempt a mock API call up to 3 times before failing (simulate with input) <em>~30 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Career link:</strong> Retry logic using loops is used in EVERY database health-check and monitoring script. This directly applies to the PwC role!</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="5">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w1">D05</div>
+        <div class="day-info">
+          <div class="day-title">Functions</div>
+          <div class="day-focus">Write reusable code — the most important concept in programming</div>
+        </div>
+        <div class="day-tags"><span class="tag concept">Concept</span><span class="tag code">Code</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Define functions:</strong> def, parameters, return values — write 6 functions of increasing complexity <em>~45 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Default parameters & keyword args:</strong> def connect(host, port=5432) <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>*args & **kwargs:</strong> understand flexible argument patterns <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Build:</strong> A function library — check_db_status(), format_alert_message(), calculate_uptime() <em>~40 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> Every great script is just well-named functions working together. If you can write clean functions, you can write production code.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="6">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w1">D06</div>
+        <div class="day-info">
+          <div class="day-title">Lists, Tuples & Dictionaries</div>
+          <div class="day-focus">Python's core data containers — used everywhere</div>
+        </div>
+        <div class="day-tags"><span class="tag concept">Concept</span><span class="tag code">Code</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Lists:</strong> append, remove, pop, sort, slice — create a list of DB servers and manipulate it <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Dictionaries:</strong> key-value pairs, .get(), .keys(), .values(), .items(), nested dicts <em>~40 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Tuples:</strong> immutable sequences, when to use them vs lists <em>~15 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Build:</strong> A script that stores server health metrics in a dict and prints a status report <em>~30 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> JSON data (from APIs) maps directly to Python dicts. Mastering dicts = mastering API responses.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="7">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w1">D07</div>
+        <div class="day-info">
+          <div class="day-title">Week 1 Project — CLI Health Checker</div>
+          <div class="day-focus">Build something real using everything from this week</div>
+        </div>
+        <div class="day-tags"><span class="tag project">Project</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Build a CLI Server Health Checker:</strong> Input server name + CPU % + memory % → output status report <em>~1.5 hrs</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Use all Week 1 concepts:</strong> functions, dicts, loops, conditionals, f-strings <em>(built in)</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Review & refactor:</strong> Add comments, rename variables to be descriptive, make it readable <em>~30 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>🏆 Week 1 complete!</strong> You now know the fundamentals that 80% of Python scripts are built on. Rest, celebrate, then hit Week 2.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== WEEK 2 ===== -->
+<div class="week-section" id="week2">
+  <div class="section-title">Week 2 – Intermediate Python</div>
+  <div class="week-header wh2">
+    <div class="wh-icon">⚙️</div>
+    <div class="wh-text">
+      <div class="wh-title">Days 8–14: Level Up Your Code Quality</div>
+      <div class="wh-sub">OOP, file handling, error handling, modules — write code like a professional</div>
+    </div>
+    <div class="wh-badge">Intermediate</div>
+  </div>
+  <div class="days">
+
+    <div class="day-card" data-day="8">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w2">D08</div>
+        <div class="day-info">
+          <div class="day-title">List Comprehensions & Lambda</div>
+          <div class="day-focus">Write Pythonic, concise code</div>
+        </div>
+        <div class="day-tags"><span class="tag concept">Concept</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>List comprehensions:</strong> [x*2 for x in list] — rewrite 5 loops as comprehensions <em>~40 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Conditional comprehensions:</strong> [x for x in list if x > 0] <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Lambda + map/filter:</strong> understand anonymous functions for quick data transformations <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Practice:</strong> Filter a list of server metrics — keep only those above threshold in one line <em>~20 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> List comprehensions make you look like a Python pro instantly. They're everywhere in real codebases.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="9">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w2">D09</div>
+        <div class="day-info">
+          <div class="day-title">Error Handling — try/except</div>
+          <div class="day-focus">Write scripts that don't crash — production-grade code</div>
+        </div>
+        <div class="day-tags"><span class="tag concept">Concept</span><span class="tag code">Code</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>try/except/finally:</strong> wrap risky operations — file reads, API calls, DB connections <em>~40 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Specific exceptions:</strong> FileNotFoundError, ValueError, TypeError, ConnectionError — catch specific ones <em>~25 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Custom exceptions:</strong> class DBConnectionError(Exception) — create your own <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Build:</strong> Wrap your Week 1 health checker in proper error handling so it never crashes <em>~30 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Critical:</strong> Every DB monitoring script MUST have error handling. This is what separates toy scripts from production code.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="10">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w2">D10</div>
+        <div class="day-info">
+          <div class="day-title">File I/O — Read & Write Files</div>
+          <div class="day-focus">Logs, CSVs, JSONs — the data of automation</div>
+        </div>
+        <div class="day-tags"><span class="tag concept">Concept</span><span class="tag code">Code</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Read/write text files:</strong> open(), with statement, read(), write(), readlines() <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>CSV files:</strong> import csv — read a CSV, parse rows, write a new CSV <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>JSON files:</strong> import json — json.load(), json.dump() — critical for API data storage <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Build:</strong> Script to parse a mock log file, count ERROR lines, write a summary report to a new file <em>~30 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Relevance:</strong> Log parsing is a core skill for the PwC role. Show this in your interview!</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="11">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w2">D11</div>
+        <div class="day-info">
+          <div class="day-title">Modules, Packages & pip</div>
+          <div class="day-focus">Stand on the shoulders of giants — use Python's ecosystem</div>
+        </div>
+        <div class="day-tags"><span class="tag concept">Concept</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Built-in modules:</strong> os, sys, datetime, time, math, random — explore all 6 <em>~40 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>pip install:</strong> Install requests, pretty-printing with rich — understand virtual environments (venv) <em>~25 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Create your own module:</strong> Split your health-checker into utils.py and main.py — import between them <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Learn:</strong> datetime — format timestamps, calculate time deltas, measure script duration <em>~20 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> The os module is gold for automation — os.path, os.listdir(), os.environ are used in every DevOps script.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="12">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w2">D12</div>
+        <div class="day-info">
+          <div class="day-title">OOP — Classes & Objects</div>
+          <div class="day-focus">Model real-world things in code</div>
+        </div>
+        <div class="day-tags"><span class="tag concept">Concept</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Classes & __init__:</strong> Create a DatabaseServer class with host, port, status attributes <em>~45 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Methods:</strong> Add connect(), disconnect(), get_status() methods to your class <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Inheritance:</strong> Create a PostgresServer class that inherits from DatabaseServer <em>~25 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>__str__ & __repr__:</strong> Make your objects print nicely <em>~15 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> You don't need deep OOP mastery for automation scripting, but understanding classes will help you read others' code and use libraries better.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="13">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w2">D13</div>
+        <div class="day-info">
+          <div class="day-title">Logging & Debugging</div>
+          <div class="day-focus">Write scripts you can actually debug and monitor</div>
+        </div>
+        <div class="day-tags"><span class="tag code">Code</span><span class="tag concept">Concept</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Python logging module:</strong> logging.info(), .warning(), .error() — set up file + console logging <em>~40 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Log levels:</strong> DEBUG, INFO, WARNING, ERROR, CRITICAL — know when to use each <em>~15 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>VS Code debugger:</strong> Set breakpoints, inspect variables, step through code — use it on a buggy script <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Upgrade Week 1 project:</strong> Add proper logging — all events written to health_check.log file <em>~25 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Career link:</strong> Logging IS monitoring. A script with no logging is useless in production. This skill directly answers "how do you monitor your automation scripts?"</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="14">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w2">D14</div>
+        <div class="day-info">
+          <div class="day-title">Week 2 Project — Log Analyser Tool</div>
+          <div class="day-focus">Build a real tool that parses, analyses & reports on log files</div>
+        </div>
+        <div class="day-tags"><span class="tag project">Project</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Build log_analyser.py:</strong> reads a log file, counts ERRORs/WARNINGs/INFOs, finds most frequent error <em>~1.5 hrs</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Output a JSON report:</strong> write summary to report.json with timestamps and counts <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Use classes:</strong> LogEntry class, LogReport class — practice OOP in a real context <em>~30 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>🏆 Week 2 done!</strong> You can now build tools that professionals use daily. The Log Analyser is genuinely portfolio-worthy — show it in interviews.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== WEEK 3 ===== -->
+<div class="week-section" id="week3">
+  <div class="section-title">Week 3 – Python in the Real World</div>
+  <div class="week-header wh3">
+    <div class="wh-icon">🔌</div>
+    <div class="wh-text">
+      <div class="wh-title">Days 15–21: Connect Python to the World</div>
+      <div class="wh-sub">APIs, databases, automation, web scraping — skills employers actually want</div>
+    </div>
+    <div class="wh-badge">Practical</div>
+  </div>
+  <div class="days">
+
+    <div class="day-card" data-day="15">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w3">D15</div>
+        <div class="day-info">
+          <div class="day-title">HTTP & REST APIs with requests</div>
+          <div class="day-focus">Talk to the internet — GET, POST, handle JSON responses</div>
+        </div>
+        <div class="day-tags"><span class="tag code">Code</span><span class="tag concept">Concept</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>pip install requests</strong> — make GET request to a public API (e.g. api.github.com or jsonplaceholder) <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Parse JSON response:</strong> extract specific fields from response.json() <em>~25 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>POST requests:</strong> send data to an API with json= parameter and headers <em>~25 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>HTTP status codes:</strong> 200, 400, 401, 404, 500 — handle each case in your script <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Build:</strong> A script that pings an API endpoint every 30 seconds and logs its response time <em>~30 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 This IS your job:</strong> Monitoring API health, checking endpoints, parsing responses — this is exactly the PwC role description in code form.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="16">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w3">D16</div>
+        <div class="day-info">
+          <div class="day-title">Python + SQL Databases</div>
+          <div class="day-focus">sqlite3, psycopg2 — connect Python to databases</div>
+        </div>
+        <div class="day-tags"><span class="tag code">Code</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>sqlite3 (built-in):</strong> create a DB, create table, insert rows, query with SELECT <em>~50 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Parameterised queries:</strong> cursor.execute("SELECT * FROM t WHERE id=?", (id,)) — prevent SQL injection <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>psycopg2 awareness:</strong> read about connecting to PostgreSQL — understand conn, cursor pattern <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Build:</strong> Store your API ping results (timestamp, endpoint, response_time, status) in a SQLite DB <em>~40 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Big win:</strong> Combining your existing SQL knowledge with Python DB connectivity makes you stand out — you can query AND automate.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="17">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w3">D17</div>
+        <div class="day-info">
+          <div class="day-title">OS Automation & Shell Commands</div>
+          <div class="day-focus">subprocess, os, shutil — control your system with Python</div>
+        </div>
+        <div class="day-tags"><span class="tag code">Code</span><span class="tag concept">Concept</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>subprocess module:</strong> run shell commands from Python — subprocess.run(), capture output <em>~40 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>os module deep dive:</strong> os.path, os.listdir(), os.environ, os.getcwd() — file system navigation <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Environment variables:</strong> os.environ.get() — store configs securely outside your code <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Build:</strong> Script that runs "ping" or "curl" on a list of servers and stores results <em>~30 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> subprocess is how Python "calls" Terraform, Ansible, or any CLI tool. This is the bridge between Python and the rest of the DevOps world.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="18">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w3">D18</div>
+        <div class="day-info">
+          <div class="day-title">Scheduling & Automation</div>
+          <div class="day-focus">Run scripts on a timer — cron, schedule library</div>
+        </div>
+        <div class="day-tags"><span class="tag code">Code</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>schedule library:</strong> pip install schedule — run functions every X minutes/hours <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Cron basics (Linux):</strong> understand crontab syntax — even if you use schedule, know cron <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Build:</strong> Schedule your API pinger to run every 1 minute, log to file, alert if 3 consecutive failures <em>~50 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 This is operational Python!</strong> Scheduled health checks running continuously and alerting on failure = exactly what reliability engineers build.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="19">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w3">D19</div>
+        <div class="day-info">
+          <div class="day-title">Working with JSON & CSV Data</div>
+          <div class="day-focus">Parse, transform, and report on structured data</div>
+        </div>
+        <div class="day-tags"><span class="tag code">Code</span><span class="tag drill">Drill</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>JSON deep dive:</strong> nested JSON, list of objects, handling missing keys safely with .get() <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>CSV with pandas:</strong> pip install pandas — read_csv(), head(), describe(), filtering rows <em>~45 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Data transformation:</strong> take raw JSON API response, flatten it, write clean CSV report <em>~35 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 pandas intro:</strong> You don't need to master pandas now, but even basic usage makes your data scripts 10x cleaner. It's the most used Python library in data/ops work.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="20">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w3">D20</div>
+        <div class="day-info">
+          <div class="day-title">Git & Version Control for Python</div>
+          <div class="day-focus">Never lose code, collaborate properly, show your work</div>
+        </div>
+        <div class="day-tags"><span class="tag concept">Concept</span><span class="tag code">Code</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Git fundamentals:</strong> init, add, commit, status, log — do this with your Week 1 project <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>GitHub:</strong> Create account, push your projects — your public portfolio starts now <em>~20 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Branching:</strong> git branch, checkout, merge — understand the workflow <em>~25 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>README.md:</strong> write a proper README for your log analyser project — describe what it does, how to run it <em>~25 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Career:</strong> A public GitHub with real projects is worth more than certifications. Start building it now — push every project from here on.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="21">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w3">D21</div>
+        <div class="day-info">
+          <div class="day-title">Week 3 Project — DB Monitoring Dashboard (CLI)</div>
+          <div class="day-focus">Your most impressive project yet — combines APIs, DB, logging, scheduling</div>
+        </div>
+        <div class="day-tags"><span class="tag project">Project</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Build db_monitor.py:</strong> Connects to SQLite, checks row counts, query time, connection success <em>~1.5 hrs</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Scheduled checks:</strong> Runs every 2 minutes, logs results, alerts (prints) if threshold breached <em>~45 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Report generation:</strong> Writes daily_summary.json at end of day with all check results <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Push to GitHub</strong> with a good README — this is interview gold 🏆 <em>~20 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>🏆 Week 3 done!</strong> This project alone could get you the PwC job. You've built a real monitoring tool from scratch.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== WEEK 4 ===== -->
+<div class="week-section" id="week4">
+  <div class="section-title">Week 4 – Capstone & Polish</div>
+  <div class="week-header wh4">
+    <div class="wh-icon">🚀</div>
+    <div class="wh-text">
+      <div class="wh-title">Days 22–30: Solidify, Showcase & Ship</div>
+      <div class="wh-sub">Testing, clean code, final project, portfolio — become interview-ready</div>
+    </div>
+    <div class="wh-badge">Advanced</div>
+  </div>
+  <div class="days">
+
+    <div class="day-card" data-day="22">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w4">D22</div>
+        <div class="day-info">
+          <div class="day-title">Clean Code & Best Practices</div>
+          <div class="day-focus">Write code others can read and maintain</div>
+        </div>
+        <div class="day-tags"><span class="tag concept">Concept</span><span class="tag drill">Drill</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>PEP 8 style guide:</strong> naming conventions, line length, spacing — run autopep8 on your old code <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Docstrings:</strong> add """description""" to every function and class you've written <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Refactor:</strong> Go back to Week 1 project and improve it with everything you've learned <em>~45 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Type hints:</strong> def check_status(host: str, port: int) -> bool — add to all functions <em>~20 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> Interviewers who see your code will notice clean, readable, well-documented code immediately. It shows professional maturity.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="23">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w4">D23</div>
+        <div class="day-info">
+          <div class="day-title">Unit Testing with pytest</div>
+          <div class="day-focus">Prove your code works — write automated tests</div>
+        </div>
+        <div class="day-tags"><span class="tag concept">Concept</span><span class="tag code">Code</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>pip install pytest</strong> — write your first test file test_utils.py with 3 test functions <em>~40 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>assert statements:</strong> test return values, exception raising, edge cases <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Mocking:</strong> unittest.mock — mock a DB connection or API call in your tests <em>~40 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Career:</strong> As a former QA engineer, testing is YOUR superpower. Python tests prove you think about quality even when writing code, not just testing others' code.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="24">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w4">D24</div>
+        <div class="day-info">
+          <div class="day-title">Environment Management & Config</div>
+          <div class="day-focus">.env files, argparse, config files — production-style scripts</div>
+        </div>
+        <div class="day-tags"><span class="tag code">Code</span><span class="tag concept">Concept</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>.env files & python-dotenv:</strong> store DB credentials, API keys outside code — load with dotenv <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>argparse:</strong> make scripts accept command-line arguments — python monitor.py --host localhost --port 5432 <em>~40 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>config.py / config.json:</strong> centralise all settings in one place — update your DB monitor to use this <em>~30 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 This is prod-ready Python.</strong> Hardcoded credentials and no CLI arguments = amateur scripts. This polish is what separates you.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="25">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w4">D25</div>
+        <div class="day-info">
+          <div class="day-title">Capstone Project — Day 1</div>
+          <div class="day-focus">Plan & scaffold your final project</div>
+        </div>
+        <div class="day-tags"><span class="tag project">Project</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Project: Automated DB Health Report Generator</strong> — reads DB metrics, generates HTML/JSON report <em>~30 min planning</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Plan your modules:</strong> db_connector.py, health_checks.py, report_generator.py, scheduler.py, main.py <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Scaffold & setup:</strong> Create files, write function signatures with docstrings, set up Git repo <em>~45 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> Planning before coding is a senior engineer habit. Show the interviewer your plan — it demonstrates structured thinking.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="26">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w4">D26</div>
+        <div class="day-info">
+          <div class="day-title">Capstone Project — Day 2</div>
+          <div class="day-focus">Build the core functionality</div>
+        </div>
+        <div class="day-tags"><span class="tag project">Project</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Implement db_connector.py:</strong> connect to SQLite, run test queries, measure response time, handle errors <em>~1 hr</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Implement health_checks.py:</strong> connection check, query latency check, row count anomaly check <em>~1 hr</em></div></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="27">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w4">D27</div>
+        <div class="day-info">
+          <div class="day-title">Capstone Project — Day 3</div>
+          <div class="day-focus">Build reporting & scheduling</div>
+        </div>
+        <div class="day-tags"><span class="tag project">Project</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>report_generator.py:</strong> generates a clean JSON + basic HTML summary of all health check results <em>~1 hr</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>scheduler.py + main.py:</strong> wire everything together, scheduled runs, CLI args, .env config <em>~1 hr</em></div></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="28">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w4">D28</div>
+        <div class="day-info">
+          <div class="day-title">Capstone Project — Day 4 (Testing + Polish)</div>
+          <div class="day-focus">Tests, README, final polish</div>
+        </div>
+        <div class="day-tags"><span class="tag project">Project</span><span class="tag drill">Drill</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Write pytest tests</strong> for all core functions — mock DB connections <em>~1 hr</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Write a professional README:</strong> What it does, how to install, how to configure, how to run, sample output <em>~45 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Push to GitHub</strong> — tag it v1.0 <em>~15 min</em></div></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="29">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w4">D29</div>
+        <div class="day-info">
+          <div class="day-title">Python Interview Prep</div>
+          <div class="day-focus">Common Python questions & coding challenges</div>
+        </div>
+        <div class="day-tags"><span class="tag drill">Drill</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Practice questions:</strong> What is GIL? Mutable vs immutable? List vs tuple? Generator vs list? <em>~40 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Coding challenges:</strong> Do 3 easy LeetCode problems in Python (Two Sum, Reverse String, FizzBuzz) <em>~45 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Walk through your projects:</strong> Practice explaining each project in 2 minutes — what problem it solves, how it works <em>~30 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> For the PwC role, they care more about your automation projects than algorithm puzzles. Lead with projects, use code challenges as backup.</div>
+      </div>
+    </div>
+
+    <div class="day-card" data-day="30">
+      <div class="day-header" onclick="toggleDay(this)">
+        <div class="day-num d-w4">D30</div>
+        <div class="day-info">
+          <div class="day-title">🎉 Day 30 — Review, Celebrate & Plan Forward</div>
+          <div class="day-focus">You made it. Now what?</div>
+        </div>
+        <div class="day-tags"><span class="tag drill">Drill</span></div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="day-body">
+        <div class="task-list">
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Review all 4 projects</strong> — make sure they're on GitHub, clean, documented <em>~45 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Update your CV:</strong> Add Python projects, mention the DB monitoring tool, link GitHub <em>~30 min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Celebrate 🎉</strong> — you've gone from scratch to building production-style Python tools in 30 days <em>∞ min</em></div></label>
+          <label class="task"><input type="checkbox"><div class="task-text"><strong>Plan Month 2:</strong> Pick one path — Flask (web APIs), pandas (data analysis), or pytest deep dive <em>~20 min</em></div></label>
+        </div>
+        <div class="tip-box"><strong>🏆 You're done!</strong> You now know more Python than most people who call themselves "Python developers." The key was building real things every week — not just watching tutorials.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOOLS TO USE -->
+<div class="section-title">🛠️ Tools & Resources</div>
+<div class="tools-grid">
+  <div class="tool-card">
+    <div class="tool-icon">📝</div>
+    <div class="tool-name">VS Code</div>
+    <div class="tool-desc">Best editor for Python. Install the Python + Pylance extensions. Free.</div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon">🐍</div>
+    <div class="tool-name">Python.org REPL</div>
+    <div class="tool-desc">Type "python" in terminal to experiment without creating files. Great for quick tests.</div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon">📚</div>
+    <div class="tool-name">Python Docs</div>
+    <div class="tool-desc">docs.python.org — best reference. Bookmark it. Use it daily.</div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon">🏋️</div>
+    <div class="tool-name">LeetCode / HackerRank</div>
+    <div class="tool-desc">Use from Week 4. Python Easy problems only. Focus on logic not algorithms.</div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon">🐙</div>
+    <div class="tool-name">GitHub</div>
+    <div class="tool-desc">Push every project. Your GitHub IS your portfolio. Start from Day 20.</div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon">🤖</div>
+    <div class="tool-name">Claude / ChatGPT</div>
+    <div class="tool-desc">Use AI to explain errors and concepts — but always try to solve problems yourself first!</div>
+  </div>
+</div>
+
+<!-- PROJECTS TRACK -->
+<div class="section-title">🏗️ Your 4 Portfolio Projects</div>
+<div class="projects-list">
+  <div class="project-item">
+    <span class="proj-week pw1">Week 1</span>
+    <div class="proj-info">
+      <div class="proj-title">CLI Server Health Checker</div>
+      <div class="proj-desc">Input server metrics → conditional logic → formatted status report</div>
+      <div class="proj-skills">
+        <span class="skill-pill">Variables</span>
+        <span class="skill-pill">Functions</span>
+        <span class="skill-pill">Dictionaries</span>
+        <span class="skill-pill">f-strings</span>
+        <span class="skill-pill">Conditionals</span>
+      </div>
+    </div>
+  </div>
+  <div class="project-item">
+    <span class="proj-week pw2">Week 2</span>
+    <div class="proj-info">
+      <div class="proj-title">Log Analyser Tool</div>
+      <div class="proj-desc">Reads log files, counts error types, generates JSON summary report</div>
+      <div class="proj-skills">
+        <span class="skill-pill">File I/O</span>
+        <span class="skill-pill">OOP</span>
+        <span class="skill-pill">Error handling</span>
+        <span class="skill-pill">Logging</span>
+        <span class="skill-pill">JSON</span>
+      </div>
+    </div>
+  </div>
+  <div class="project-item">
+    <span class="proj-week pw3">Week 3</span>
+    <div class="proj-info">
+      <div class="proj-title">DB Monitoring Dashboard (CLI)</div>
+      <div class="proj-desc">Connects to DB, runs health checks on a schedule, stores results, generates alerts</div>
+      <div class="proj-skills">
+        <span class="skill-pill">sqlite3</span>
+        <span class="skill-pill">requests</span>
+        <span class="skill-pill">schedule</span>
+        <span class="skill-pill">subprocess</span>
+        <span class="skill-pill">Git</span>
+      </div>
+    </div>
+  </div>
+  <div class="project-item">
+    <span class="proj-week pw4">Week 4</span>
+    <div class="proj-info">
+      <div class="proj-title">Automated DB Health Report Generator</div>
+      <div class="proj-desc">Full modular tool: scheduled DB health checks → HTML/JSON reports → tested, documented, deployed</div>
+      <div class="proj-skills">
+        <span class="skill-pill">pytest</span>
+        <span class="skill-pill">argparse</span>
+        <span class="skill-pill">dotenv</span>
+        <span class="skill-pill">type hints</span>
+        <span class="skill-pill">Clean code</span>
+        <span class="skill-pill">GitHub</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Built for Nikhil Ranjan · Python Mastery Blueprint · 🐍 Happy coding!</p>
+  <p style="margin-top:.5rem">Remember: 2 hours/day consistently beats 8 hours on weekends. Show up every day.</p>
+</footer>
+
+<script>
+  function toggleDay(header) {
+    const card = header.parentElement;
+    card.classList.toggle('open');
+  }
+
+  function updateProgress() {
+    const all = document.querySelectorAll('.task input[type=checkbox]');
+    const checked = document.querySelectorAll('.task input[type=checkbox]:checked');
+    const pct = all.length ? (checked.length / all.length) * 100 : 0;
+    document.getElementById('prog-bar').style.width = pct + '%';
+    document.getElementById('prog-count').textContent = `${checked.length} / ${all.length}`;
+    document.getElementById('xp-label').textContent = `${checked.length * 10} XP earned 🏆`;
+
+    document.querySelectorAll('.day-card').forEach(card => {
+      const boxes = card.querySelectorAll('input[type=checkbox]');
+      const done = card.querySelectorAll('input[type=checkbox]:checked');
+      if (boxes.length > 0 && boxes.length === done.length) {
+        card.classList.add('done');
+      } else {
+        card.classList.remove('done');
+      }
+    });
+  }
+
+  document.querySelectorAll('.task input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', function() {
+      this.closest('.task').classList.toggle('checked', this.checked);
+      updateProgress();
+    });
+  });
+
+  // Open Day 1 by default
+  document.querySelector('.day-card').classList.add('open');
+  updateProgress();
+</script>
+
+</body>
+</html>
